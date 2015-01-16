@@ -31,7 +31,10 @@ The mean steps taken per day is `r round(sum(stepData$steps, na.rm=T)/length(uni
 ## What is the average daily activity pattern?
 
 ```{r}
-g <- ggplot(data=stepData, aes(x=hour, y=steps))
+hours = 0:23
+avgStep = tapply(stepData$steps, stepData$hour, function(x) mean(x, na.rm=T))
+#g = ggplot(data=stepData, aes(x=hour, y=steps))
+g = ggplot(data=NULL, aes(x=hours, y=avgStep))
 g + geom_histogram(stat="identity")
 ```
 
@@ -40,3 +43,8 @@ g + geom_histogram(stat="identity")
 
 
 ## Are there differences in activity patterns between weekdays and weekends?
+
+```{r}
+stepData$wday = factor(stepData$time$wday)
+sapply(stepData$wday)
+```
